@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WebVR Oculus</title>
+    <script src="js/bower_components/three.js/three.js"></script>
+    <script src="js/libs/VRControls.js"></script>
+    <script src="js/libs/VREffect.js"></script>
+    <script src="js/Oculus.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+    <script>
+        window.onload = function(){
+            console.log("onload");
+            var oculus = new Oculus.Oculus();
+            oculus.init();
+
+            $("#fullscreen").click(function() {
+                oculus.fullScreen();
+            });
+        };
+    </script>
+</head>
+<body>
+<section id="stats">
+    <button id="fullscreen">fullscreen</button>
+</section>
+
+<video id="video" style="display:none"></video>
+
+</body>
+</html>

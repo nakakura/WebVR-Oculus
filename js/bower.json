@@ -1,0 +1,19 @@
+{
+  "name": "WebVR-Oculus",
+  "version": "0.0.0",
+  "homepage": "https://github.com/nakakura/WebVR-Oculus",
+  "authors": [
+    "Toshiya Nakakura <t.nakakura@ntt.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "three.js": "~0.71.0"
+  }
+}
