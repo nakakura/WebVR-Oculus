@@ -56,12 +56,10 @@ var Oculus;
         };
         Oculus.prototype.setupGl = function () {
             var _this = this;
-            console.log('setupgl');
-            var dolly = new THREE.Group();
-            dolly.position.set(0, 0, 15);
-            this._scene.add(dolly);
             this._camera = new THREE.PerspectiveCamera(75, this._dk1Width / this._dk1Height, 0.1, 1000);
-            dolly.add(this._camera);
+            //this._camera = new THREE.OrthographicCamera(this._dk1Width, this._dk1Height, 0.1, 1000);
+            this._camera.up.set(0, 0, 1);
+            this._scene.add(this._camera);
             this._renderer.setClearColor(0x202020, 1.0);
             var ambient = new THREE.AmbientLight(0x333333);
             this._scene.add(ambient);
@@ -71,10 +69,7 @@ var Oculus;
             var mirrorMaterial = new THREE.MeshLambertMaterial({
                 color: 0xaaaaaa
             });
-            var riftOrigin = new THREE.Object3D();
-            riftOrigin.position.set(0, 0, -15);
-            this._scene.add(riftOrigin);
-            var geometry = new THREE.CubeGeometry(50, 50, 0);
+            var geometry = new THREE.PlaneGeometry(this._dk1Width, this._dk1Height);
             this._videoTexture = new THREE.Texture(this._video); // なんとこれだけでテクスチャとして使える！
             this._videoTexture.minFilter = THREE.LinearFilter;
             this._videoTexture.magFilter = THREE.LinearFilter;
@@ -84,6 +79,7 @@ var Oculus;
             });
             var material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
             var mesh = new THREE.Mesh(geometry, this._videoMaterial);
+            mesh.position.z = -400;
             this._scene.add(mesh);
             // VR
             var vrBtn = document.getElementById("vrBtn");
@@ -96,14 +92,10 @@ var Oculus;
                 }
             });
             this._vrControls.scale = this._vrPositionScale;
-            this._camera.scale.x = this._vrPositionScale;
-            this._camera.scale.y = this._vrPositionScale;
-            this._camera.scale.z = this._vrPositionScale;
             this._resize();
             this._render();
         };
         Oculus.prototype._resize = function () {
-            this._camera.aspect = this._dk1Width / this._dk1Height;
             this._camera.updateProjectionMatrix();
             this._renderer.setSize(this._dk1Width, this._dk1Height);
             this._vrEffect.setSize(this._dk1Width, this._dk1Height);
@@ -115,7 +107,7 @@ var Oculus;
             this._video = document.getElementById('video');
             this._video.autoplay = true;
             var option = {
-                video: { mandatory: { minWidth: this._dk1Width, minHeight: this._dk1Height } },
+                video: { mandatory: { minWidth: 1920, minHeight: 1080 } },
                 audio: false
             };
             // var option = {video: true};
